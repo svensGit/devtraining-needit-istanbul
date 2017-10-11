@@ -6,7 +6,7 @@
         <action_delete>false</action_delete>
         <action_insert>true</action_insert>
         <action_query>false</action_query>
-        <action_update>false</action_update>
+        <action_update>true</action_update>
         <active>true</active>
         <add_message>false</add_message>
         <advanced>true</advanced>
@@ -19,7 +19,7 @@
         <filter_condition/>
         <is_rest>false</is_rest>
         <message/>
-        <name>Needit When needed field date</name>
+        <name>NeedIt Debugging Practice</name>
         <order>100</order>
         <priority>100</priority>
         <rest_method/>
@@ -28,62 +28,67 @@
         <rest_service_text/>
         <rest_variables/>
         <role_conditions/>
-        <script><![CDATA[(function executeRule(current, previous /*null when async*/)
-{
-	gs.debug("DebugRuleExcecution whenNeeded started");
+        <script><![CDATA[(function executeRule(current, previous /*null when async*/) {
 
 	// Add your code here
 	
-	// rightnow stores the current time
-	var rightnow = new GlideDateTime();
-	// Create a GlideDateTime object for the When needed date
-	var whenNeeded = new GlideDateTime(current.u_when_needed);
+	current.short_description = "This text set by the Debugging Business Rules business rule.";
+	var myNum = current.state;
 
-	// If the When needed date is before rightnow, do not write the record to the database
-	// Output an error message to the screen
-	if(whenNeeded.before(rightnow))
-	{
-		gs.addErrorMessage("When needed date cannot be in the past.  Your request has not been saved to the database.");
-		current.setAbortAction(true);
-		return;
+	// The function in this try/catch is not defined
+	try{
+		thisFunctionDoesNotExist();
 	}
-	
-	var strDateToday = rightnow.getLocalDate();
-	var strDateWhenNeeded = whenNeeded.getLocalDate();
-	
-	if (strDateToday.getDisplayValue() === strDateWhenNeeded.getDisplayValue())
+	catch(err)
 	{
-		gs.addErrorMessage("When needed date has to be at least one date later as today.");
-		current.setAbortAction(true);
-		return;
+		gs.error("NeedIt App: a JavaScript runtime error occurred - " + err);
 	}
-	else
+
+	// This function is not defined and is not part of a try/catch
+	thisFunctionAlsoDoesNotExist();
+
+	// getNum and setNum demonstrate JavaScript Closure
+	var x = 7;
+
+	function numFunc()
 	{
-		gs.addInfoMessage("All is fine. Record is inserted.");
-		current.setAbortAction(false);
-		return;
+		var x = 10;
+		return{
+			getNum: function()
+			{
+				return x;
+			},
+			setNum: function(newNum)
+			{
+				x = newNum;
+			}
+		};
 	}
+	var callFunc = numFunc();
+	callFunc.getNum();
+	callFunc.setNum(2);
+	callFunc.getNum();
 	
 })(current, previous);]]></script>
         <sys_class_name>sys_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
-        <sys_created_on>2017-08-30 14:43:31</sys_created_on>
+        <sys_created_on>2017-10-11 13:00:44</sys_created_on>
         <sys_customer_update>true</sys_customer_update>
         <sys_domain>global</sys_domain>
         <sys_domain_path>/</sys_domain_path>
-        <sys_id>cf3d68930f300300346c4c6be1050efe</sys_id>
-        <sys_mod_count>15</sys_mod_count>
-        <sys_name>Needit When needed field date</sys_name>
+        <sys_id>aef868780f710300346c4c6be1050e16</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>NeedIt Debugging Practice</sys_name>
         <sys_overrides/>
         <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
         <sys_policy/>
         <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
         <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
-        <sys_update_name>sys_script_cf3d68930f300300346c4c6be1050efe</sys_update_name>
+        <sys_update_name>sys_script_aef868780f710300346c4c6be1050e16</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2017-10-10 12:35:10</sys_updated_on>
+        <sys_updated_on>2017-10-11 13:06:38</sys_updated_on>
         <template/>
         <when>before</when>
     </sys_script>
-    <sys_translated_text action="delete_multiple" query="documentkey=cf3d68930f300300346c4c6be1050efe"/>
+    <sys_translated_text action="delete_multiple" query="documentkey=aef868780f710300346c4c6be1050e16"/>
 </record_update>
